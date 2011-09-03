@@ -541,6 +541,9 @@ function vote_stop(options){
 	}
 }
 
+function fuss_at_squatters() {
+}
+
 function process_vote(options){
 	var user_id = options['user_id'];
 	var choice = options['text'];
@@ -628,22 +631,17 @@ function show_existing_vote(attempted_vote_type){
 
 function show_plays(options){
 	var user_id = options['user_id'];
+	var input_message = " - ";
 	if (dj_hash.length > 0){
-		var input_message = "";
+		var play_counts = [];
 		for (var a=0; a<5; a++){
-			if (dj_hash[a] != undefined){
-				input_message += dj_play_hash[dj_hash[a]]["count"];
-			}
-			else{
-				input_message += "_";
-			}
-			if (a != 5 - 1){
-				input_message += " . ";
-			}
+			var count = (dj_hash[a]) ? dj_play_hash[dj_hash[a]]["count"] : 0;
+			play_counts.push(count);
 		}
+		input_message = play_counts.join(' . ');
 	}
 	else{
-		var input_message = "No one's playing right now, so you should DJ for us " + get_user_name(user_id, true) + "!";
+		input_message = "No one's playing right now, so you should DJ for us " + get_user_name(user_id, true) + "!";
 	}
 	deliver_chat(input_message);
 }
